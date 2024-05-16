@@ -18,6 +18,21 @@ const chordPatterns = {
   // Add more chords as needed
 };
 
+// Define typical note progressions based on a simple scale
+const noteProgressions = {
+  C: ["D", "E", "G"],
+  D: ["E", "F", "A"],
+  E: ["F", "G", "B"],
+  F: ["G", "A", "C"],
+  G: ["A", "B", "D"],
+  A: ["B", "C", "E"],
+  B: ["C", "D", "F"],
+};
+
+const suggestNextNotes = (currentNote) => {
+  return noteProgressions[currentNote] || [];
+};
+
 function freqToMidi(f) {
   const mathlog2 = Math.log(f / 440) / Math.log(2);
   const m = Math.round(12 * mathlog2) + 69;
@@ -40,6 +55,7 @@ const ChordIdentifier = () => {
   const [currentChord, setCurrentChord] = useState("");
   const [currentNotes, setCurrentNotes] = useState([]);
   const [notesArray, setNotesArray] = useState([]); // State to hold ongoing notes
+  const [nextNotes, setNextNotes] = useState([]); // State to hold suggested next notes
 
   useEffect(() => {
     const setup = async () => {
@@ -79,6 +95,7 @@ const ChordIdentifier = () => {
           // Assuming a chord is at least 3 notes
           const chord = notesToChord(newNotesArray);
           setCurrentChord(chord);
+          setNextNotes(suggestNextNotes(note)); // Update note suggestions
           setNotesArray([]); // Reset notes array after identifying a chord
         }
       }
@@ -91,6 +108,7 @@ const ChordIdentifier = () => {
       <h1>Chord Identifier</h1>
       <p>Detected Chord: {currentChord}</p>
       <p>Current Notes: {currentNotes.join(", ")}</p>
+      <p>Next Note Suggestions: {nextNotes.join(", ")}</p>
     </div>
   );
 };
