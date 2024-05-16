@@ -9,20 +9,41 @@ let audioContext;
 let stream;
 
 const scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const chordPatterns = {
+  "C major": ["C", "E", "G"],
+  "F major": ["F", "A", "D"],
+  "D major": ["D", "F#", "A"],
+  "G major": ["G", "B", "D"],
+  "A major": ["A", "C#", "E"],
+  // Add more chords as needed
+};
 
-// taken from p5.Sound
 function freqToMidi(f) {
   const mathlog2 = Math.log(f / 440) / Math.log(2);
   const m = Math.round(12 * mathlog2) + 69;
   return m;
 }
 
+function notesToChord(notes) {
+  let foundChord = "Unknown Chord";
+  Object.entries(chordPatterns).forEach(([chord, chordNotes]) => {
+    const sortedChordNotes = chordNotes.sort();
+    const sortedNotes = notes.sort();
+    if (sortedChordNotes.every((note) => sortedNotes.includes(note))) {
+      foundChord = chord;
+    }
+  });
+  return foundChord;
+}
+
 const ChordIdentifier = () => {
-  const [currentNote, setCurrentNote] = useState("");
+  const [currentChord, setCurrentChord] = useState("");
+  const [currentNotes, setCurrentNotes] = useState([]);
+  const [notesArray, setNotesArray] = useState([]); // State to hold ongoing notes
 
   useEffect(() => {
     const setup = async () => {
-      audioContext = new AudioContext({ sampleRate: 44100 }); // uses higher FFT to detect more frequency data
+      audioContext = new AudioContext();
       stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
         video: false,
@@ -49,20 +70,27 @@ const ChordIdentifier = () => {
   const getPitch = () => {
     pitch.getPitch(function (err, frequency) {
       if (frequency) {
-        console.log(`freq: ${frequency}`);
         let midiNum = freqToMidi(frequency);
-        const note = scale[midiNum % 12]; // 12 notes to cover all octaves
-        setCurrentNote(note);
-        console.log(`note: ${note}`);
+        const note = scale[midiNum % 12];
+        const newNotesArray = [...notesArray, note];
+        setNotesArray(newNotesArray);
+        setCurrentNotes(newNotesArray);
+        if (newNotesArray.length >= 3) {
+          // Assuming a chord is at least 3 notes
+          const chord = notesToChord(newNotesArray);
+          setCurrentChord(chord);
+          setNotesArray([]); // Reset notes array after identifying a chord
+        }
       }
-      getPitch();
+      getPitch(); // Continue detecting pitches
     });
   };
 
   return (
     <div>
       <h1>Chord Identifier</h1>
-      <p>Detected Chord: {currentNote}</p>
+      <p>Detected Chord: {currentChord}</p>
+      <p>Current Notes: {currentNotes.join(", ")}</p>
     </div>
   );
 };
