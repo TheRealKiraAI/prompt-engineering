@@ -51,11 +51,29 @@ function notesToChord(notes) {
   return foundChord;
 }
 
+const scales = {
+  "C Major": ["C", "D", "E", "F", "G", "A", "B"],
+  "G Major": ["G", "A", "B", "C", "D", "E", "F#"],
+  // Add more scales as needed
+};
+
+const identifyScales = (note) => {
+  const matchingScales = [];
+  for (const [scale, notes] of Object.entries(scales)) {
+    if (notes.includes(note)) {
+      matchingScales.push(scale);
+    }
+  }
+  return matchingScales;
+};
+
 const ChordIdentifier = () => {
   const [currentChord, setCurrentChord] = useState("");
   const [currentNotes, setCurrentNotes] = useState([]);
   const [notesArray, setNotesArray] = useState([]); // State to hold ongoing notes
   const [nextNotes, setNextNotes] = useState([]); // State to hold suggested next notes
+  const [detectedNote, setDetectedNote] = useState("");
+  const [matchedScales, setMatchedScales] = useState([]);
 
   useEffect(() => {
     const setup = async () => {
@@ -98,6 +116,8 @@ const ChordIdentifier = () => {
           setNextNotes(suggestNextNotes(note)); // Update note suggestions
           setNotesArray([]); // Reset notes array after identifying a chord
         }
+        setDetectedNote(note);
+        setMatchedScales(identifyScales(note)); // Update matched scales
       }
       getPitch(); // Continue detecting pitches
     });
@@ -109,6 +129,8 @@ const ChordIdentifier = () => {
       <p>Detected Chord: {currentChord}</p>
       <p>Current Notes: {currentNotes.join(", ")}</p>
       <p>Next Note Suggestions: {nextNotes.join(", ")}</p>
+      <p>Detected Note: {detectedNote}</p>
+      <p>Matched Scales: {matchedScales.join(", ")}</p>
     </div>
   );
 };
