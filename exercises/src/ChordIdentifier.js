@@ -2,13 +2,15 @@ import "./App.css";
 import "./ChordIdentifier.css";
 import React, { useEffect, useState } from "react";
 import ml5 from "ml5";
+import p5 from "p5";
+import P5Canvas from "./P5Canvas";
 
 // pitch variables
 let pitch;
 let audioContext;
 let stream;
 
-const scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const scale = ["C", "C#", "D", "D#", "E", "E#", "F", "F#", "G", "G#", "A", "A#", "B"];
 const chordPatterns = {
   "C major": ["C", "E", "G"],
   "F major": ["F", "A", "D"],
@@ -134,8 +136,9 @@ const ChordIdentifier = () => {
       {/* <p>Detected Chord: {currentChord}</p> */}
       <p>Current Notes: {currentNotes.join(", ")}</p>
       {/* <p>Next Note Suggestions: {nextNotes.join(", ")}</p> */}
-      <p>Detected Note: {detectedNote}</p>
+      <p>Detected Note: {currentNotes}</p>
       <p>Matched Scales: {matchedScales.join(", ")}</p>
+      <P5Canvas note={detectedNote} />
     </div>
   );
 };
