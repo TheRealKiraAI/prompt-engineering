@@ -1,0 +1,6 @@
+Choose 1-2 of the following types of prompting. Practice writing your own prompts with clear and concise prompt engineering.
+
+1. text prompting - complete text or question.
+2. content generation - create new content given guidelines (instructions) for code, images, etc.
+3. sentiment positive - analyzing something as positive
+4. 3. sentiment negative - analyzing something as negative

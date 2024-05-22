@@ -1,0 +1,12 @@
+Write 3 clear and concise prompts for 3 different prompt formats:
+
+1. text prompting - complete text or question.
+Ex. You are an expert astrologist. Imagine you are describing a waxing versus a waning moon to a group of high school students. 
+
+2. content generation - create new content given guidelines (instructions) for code, images, etc.
+Ex. Write a beginner's guide to artificial intelligence.
+Ex. Write a social media post for your bike shop about the latest Trek Top Fuel. 
+
+3. sentiment - analyzing something as positive or negative
+Ex. Describe a true moment of happiness.
+Ex. Describe a situation where you felt helpless and unable to change the outcome.
