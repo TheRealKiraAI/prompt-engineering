@@ -16,7 +16,7 @@
   "playlists": [
     {
       "id": "playlist1",
-      "name": "My Favorites",
+      "genre": "My Favorites",
       "description": "A collection of my favorite songs.",
       "owner": {
         "id": "user123",
@@ -80,7 +80,7 @@
     },
     {
       "id": "playlist2",
-      "name": "Chill Vibes",
+      "genre": "Chill Vibes",
       "description": "Relax and unwind with these chill tracks.",
       "owner": {
         "id": "user456",
