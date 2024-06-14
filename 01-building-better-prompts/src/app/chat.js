@@ -3,10 +3,12 @@
 import { useChat } from "@ai-sdk/react";
 
 export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: "/api/chat",
-    model: "gpt-4-turbo",
-  });
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit
+  } = useChat();
 
   return (
     <div>
@@ -18,7 +20,11 @@ export default function Chat() {
       ))}
 
       <form onSubmit={handleSubmit}>
-        <input value={input} placeholder="Say something..." onChange={handleInputChange} />
+        <input
+          value={input}
+          placeholder="Say something..."
+          onChange={handleInputChange}
+        />
       </form>
     </div>
   );
