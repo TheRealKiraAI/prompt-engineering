@@ -8,11 +8,21 @@ const LoadingComponent = () => (
   <div className="animate-pulse p-4">getting name...</div>
 );
 
-// update async code
-// todo lab API call
 const getName = async (business) => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  return "The Bike Hub";
+  try {
+    const response = await fetch(
+      "https://jsonplaceholder.typicode.com/todos/1"
+    );
+    if (!response.ok) {
+      throw new Error("network error");
+    } else {
+      const data = await response.json();
+      return data.title;
+    }
+  } catch (error) {
+    console.log("Failed", error);
+    return "error";
+  }
 };
 
 const NameComponent = (props) => (
@@ -38,12 +48,12 @@ export async function streamComponent() {
             const name = await getName(business);
             if (name.includes("Bike")) {
               yield <div>Naming {business}...</div>;
-              return <NameComponent name={name} business={business} />;
+              return <div>{name}</div>;
             } else {
               // example to update components based on change
               yield <div>Searching for new name for {business}...</div>;
               await new Promise((resolve) => setTimeout(resolve, 2000));
-              return "Not Bike Hub";
+              return <NameComponent name={name} business={business} />;
             }
           } catch {
             throw new Error();
