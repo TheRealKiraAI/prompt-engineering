@@ -4,7 +4,9 @@ import { streamUI } from "ai/rsc";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
 
-const LoadingComponent = () => <div className="animate-pulse p-4">getting name...</div>;
+const LoadingComponent = () => (
+  <div className="animate-pulse p-4">getting name...</div>
+);
 
 // update async code
 // todo lab API call
@@ -32,8 +34,20 @@ export async function streamComponent() {
         }),
         generate: async function* ({ business }) {
           yield <LoadingComponent />;
-          const name = await getName(business);
-          return <NameComponent name={name} business={business} />;
+          try {
+            const name = await getName(business);
+            if (name.includes("Bike")) {
+              yield <div>Naming {business}...</div>;
+              return <NameComponent name={name} business={business} />;
+            } else {
+              // example to update components based on change
+              yield <div>Searching for new name for {business}...</div>;
+              await new Promise((resolve) => setTimeout(resolve, 2000));
+              return "Not Bike Hub";
+            }
+          } catch {
+            throw new Error();
+          }
         },
       },
     },
