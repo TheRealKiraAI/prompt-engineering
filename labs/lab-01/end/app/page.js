@@ -15,18 +15,9 @@ export default function Page() {
           setComponent(await streamComponent());
         }}
       >
-        <Button>Streamed Component</Button>
+        <Button>Stream Component</Button>
       </form>
       <div>{component}</div>
     </div>
   );
 }
-
-// export default function Home() {
-//   return (
-//     <main className={styles.main}>
-//       {/* <h1>Chordy Music AI App 🎹</h1>
-//       <Chat /> */}
-//     </main>
-//   );
-// }
