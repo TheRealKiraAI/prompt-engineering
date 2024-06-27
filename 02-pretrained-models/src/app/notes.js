@@ -1,26 +1,88 @@
 import React, { useEffect, useState } from "react";
 import ml5 from "ml5";
+import Canvas from "./canvas";
+import styles from "./page.module.css";
 
 // pitch variables
 let pitch;
 let audioContext;
 let stream;
 
-const scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const scale = ["C", "C#", "D", "D#", "E", "E#", "F", "F#", "G", "G#", "A", "A#", "B"];
+const chordPatterns = {
+  "C major": ["C", "E", "G"],
+  "F major": ["F", "A", "D"],
+  "D major": ["D", "F#", "A"],
+  "G major": ["G", "B", "D"],
+  "A major": ["A", "C#", "E"],
+  // Add more chords as needed
+};
 
-// taken from p5.Sound
+// define typical note progressions based on a simple scale
+const noteProgressions = {
+  C: ["D", "E", "G"],
+  D: ["E", "F", "A"],
+  E: ["F", "G", "B"],
+  F: ["G", "A", "C"],
+  G: ["A", "B", "D"],
+  A: ["B", "C", "E"],
+  B: ["C", "D", "F"],
+};
+
+const suggestNextNotes = (currentNote) => {
+  return noteProgressions[currentNote] || [];
+};
+
 function freqToMidi(f) {
   const mathlog2 = Math.log(f / 440) / Math.log(2);
   const m = Math.round(12 * mathlog2) + 69;
   return m;
 }
 
-const Notes = () => {
-  const [currentNote, setCurrentNote] = useState("");
+function notesToChord(notes) {
+  let foundChord = "Unknown Chord";
+  Object.entries(chordPatterns).forEach(([chord, chordNotes]) => {
+    const sortedChordNotes = chordNotes.sort();
+    const sortedNotes = notes.sort();
+    if (sortedChordNotes.every((note) => sortedNotes.includes(note))) {
+      foundChord = chord;
+    }
+  });
+  return foundChord;
+}
+
+const scales = {
+  "C Major": ["C", "D", "E", "F", "G", "A", "B"],
+  "G Major": ["G", "A", "B", "C", "D", "E", "F#"],
+  "A Major": ["A", "B", "C#", "D", "E", "F#", "G#"],
+  "D Major": ["D", "E", "F#", "G", "A", "B", "C#"],
+  "E Major": ["E", "F#", "G#", "A", "B", "C#", "D#"],
+  "F Major": ["F", "G", "A", "Bb", "C", "D", "E"],
+
+  // Add more scales as needed
+};
+
+const identifyScales = (note) => {
+  const matchingScales = [];
+  for (const [scale, notes] of Object.entries(scales)) {
+    if (notes.includes(note)) {
+      matchingScales.push(scale);
+    }
+  }
+  return matchingScales;
+};
+
+const ChordIdentifier = () => {
+  const [currentChord, setCurrentChord] = useState("");
+  const [currentNotes, setCurrentNotes] = useState([]);
+  const [notesArray, setNotesArray] = useState([]); // State to hold ongoing notes
+  const [nextNotes, setNextNotes] = useState([]); // State to hold suggested next notes
+  const [detectedNote, setDetectedNote] = useState("");
+  const [matchedScales, setMatchedScales] = useState([]);
 
   useEffect(() => {
     const setup = async () => {
-      audioContext = new AudioContext({ sampleRate: 44100 }); // uses higher FFT to detect more frequency data
+      audioContext = new AudioContext();
       stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
         video: false,
@@ -47,20 +109,33 @@ const Notes = () => {
   const getPitch = () => {
     pitch.getPitch(function (err, frequency) {
       if (frequency) {
-        console.log(`freq: ${frequency}`);
         let midiNum = freqToMidi(frequency);
-        const note = scale[midiNum % 12]; // 12 notes to cover all octaves
-        setCurrentNote(note);
-        console.log(`note: ${note}`);
+        const note = scale[midiNum % 12];
+        const newNotesArray = [...notesArray, note];
+        setNotesArray(newNotesArray);
+        setCurrentNotes(newNotesArray);
+        if (newNotesArray.length >= 3) {
+          // Assuming a chord is at least 3 notes
+          const chord = notesToChord(newNotesArray);
+          setCurrentChord(chord);
+          setNextNotes(suggestNextNotes(note)); // Update note suggestions
+          setNotesArray([]); // Reset notes array after identifying a chord
+        }
+        setDetectedNote(note);
+        setMatchedScales(identifyScales(note)); // Update matched scales
       }
-      getPitch();
+      getPitch(); // Continue detecting pitches
     });
   };
 
   return (
-    <div>
-      <h1>Chord Identifier</h1>
-      <p>Detected Chord: {currentNote}</p>
+    <div class={styles.main}>
+      {/* <p>Detected Chord: {currentChord}</p> */}
+      <p>Current Notes: {currentNotes.join(", ")}</p>
+      {/* <p>Next Note Suggestions: {nextNotes.join(", ")}</p> */}
+      <p>Detected Note: {currentNotes}</p>
+      <p>Matched Scales: {matchedScales.join(", ")}</p>
+      <Canvas note={detectedNote} />
     </div>
   );
 };
@@ -80,4 +155,4 @@ function startAudioContext() {
   }
 }
 
-export default Notes;
+export default ChordIdentifier;
