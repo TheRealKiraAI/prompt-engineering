@@ -1,6 +1,7 @@
 "use client";
 
 import Notes from "./notes";
+import Viewer from "./viewer";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
     <main className={styles.main}>
       <h1>Chordy Music AI App 🎹</h1>
       <Notes />
+      <Viewer />
     </main>
   );
 }
