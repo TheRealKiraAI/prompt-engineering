@@ -59,21 +59,87 @@ const Notes = () => {
           notesPlayed.shift();
         }
 
-        const feedback = analyzePerformance(notesPlayed);
-        console.log(feedback);
+        analyzePerformance(notesPlayed);
       }
       getPitch(); // continue detecting pitches
     });
   };
 
-  const PerformanceScore = ({ performanceScore }) => {
+  /*
+   STEP 2: Example Solution
+  */
+  function step2AnalyzePerformance(notes) {
+    const targetNotes = ["C", "D", "E", "F", "G"];
+
+    for (let i = 0; i < 5; i++) {
+      if (notes.includes(targetNotes[i])) {
+        console.log("yay");
+      } else console.log("nay");
+    }
+  }
+
+  /*
+   STEP 3: Example Solution
+  */
+  function step3AnalyzePerformance(notes) {
+    const targetNotes = ["C", "D", "E", "F", "G"];
+
+    let correctNotes = 0;
+    for (let i = 0; i < 5; i++) {
+      if (notes.includes(targetNotes[i])) {
+        console.log("yay");
+        correctNotes++;
+      } else console.log("nay");
+    }
+    console.log(correctNotes);
+  }
+
+  /*
+   STEP 4: Example Solution
+  */
+  function step4AnalyzePerformance(notes) {
+    const targetNotes = ["C", "D", "E", "F", "G"];
+
+    let correctNotes = 0;
+    for (let i = 0; i < 5; i++) {
+      if (notes.includes(targetNotes[i])) {
+        console.log("yay");
+        correctNotes++;
+      } else console.log("nay");
+    }
+    console.log(correctNotes);
+    const performanceScore = (correctNotes / 5) * 100;
+  }
+
+  /*
+   STEP 5: Example Solution
+  */
+  function step5AnalyzePerformance(notes) {
+    const targetNotes = ["C", "D", "E", "F", "G"];
+
+    let correctNotes = 0;
+    for (let i = 0; i < 5; i++) {
+      if (notes.includes(targetNotes[i])) {
+        console.log("yay");
+        correctNotes++;
+      } else console.log("nay");
+    }
+    console.log(correctNotes);
+    const performanceScore = (correctNotes / 5) * 100;
+
     if (performanceScore > 80) {
       return <p>Close! You played almost all the notes correctly!</p>;
     } else {
       return <p>Performance score: {performanceScore}%. Keep practicing.</p>;
     }
-  };
+  }
 
+  /* 
+   STEP 6: Example Solution
+   name: analyzePerformance
+   input: notes
+   desc: calculates the performance score based on the notes played
+  */
   function analyzePerformance(notes) {
     const targetNotes = ["C", "D", "E", "F", "G"];
 
@@ -87,6 +153,21 @@ const Notes = () => {
     const performanceScore = (correctNotes / 5) * 100;
     setPerformanceScore(performanceScore);
   }
+
+  /*
+   STEP 6: Example component for step 6
+   name: PerformanceScore
+   input: performanceScore
+   desc: conditionally renders a message based on the performance score
+   note: final example solution
+  */
+  const PerformanceScore = ({ performanceScore }) => {
+    if (performanceScore > 80) {
+      return <p>Close! You played almost all the notes correctly!</p>;
+    } else {
+      return <p>Performance score: {performanceScore}%. Keep practicing.</p>;
+    }
+  };
 
   return (
     <div className={styles.main}>
