@@ -9,7 +9,7 @@ const Notes = dynamic(() => import("./notes"), {
   ssr: false,
 });
 
-export default function Page() {
+export default function Home() {
   return (
     <main className={styles.main}>
       <h1>Chordy Music AI App 🎹</h1>
