@@ -7,7 +7,7 @@ let audioContext;
 
 const Notes = () => {
   return (
-    <div className={styles.main}>
+    <div class={styles.main}>
       <p>My notes</p>
     </div>
   );
