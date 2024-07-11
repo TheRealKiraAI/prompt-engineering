@@ -1,4 +1,4 @@
-"use client";
+"use client"; // notice the use client
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ export default function Page() {
   const [component, setComponent] = useState();
 
   return (
+    // step 2 & 3: example of a simple form that includes the streamComponent Server Action call and a Button to trigger the call.
     <div>
       <form
         onSubmit={async (e) => {

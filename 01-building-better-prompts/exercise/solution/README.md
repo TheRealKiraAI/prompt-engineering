@@ -1,5 +1,16 @@
 ## Building Better Prompts
 
+#### Objectives
+
+- Review the Vercel Suite of AI Tools and SDK
+- Create a React Project with JavaScript and Next.js
+- Build Prompts for your AI
+- Build Routes
+- Use Hooks
+- Work with Vercel's SDK Core, React Server Components (RSC), and User Interface (UI).
+
+#### Setup
+
 First, run the development server:
 
 ```bash
