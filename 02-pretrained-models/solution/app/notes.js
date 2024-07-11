@@ -19,6 +19,7 @@ const scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const Notes = () => {
   const [detectedNote, setDetectedNote] = useState("");
 
+  // updates audio input stream from user's microphone
   useEffect(() => {
     const setup = async () => {
       audioContext = new AudioContext();
@@ -32,6 +33,7 @@ const Notes = () => {
     setup();
   }, []);
 
+  // loads pitch detection model and starts pitch detection
   const startPitch = (stream, audioContext) => {
     startAudioContext();
     if (audioContext) {
@@ -45,8 +47,8 @@ const Notes = () => {
     getPitch();
   };
 
+  // get pitch from ml5 library
   const getPitch = () => {
-    // get pitch from ml5 library
     pitch.getPitch(function (err, frequency) {
       if (frequency) {
         console.log(`frequency ${frequency}`);

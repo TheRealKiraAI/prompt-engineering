@@ -1,37 +1,5 @@
 # Instructor Checklist of Objectives
 
-### Overview of All Objectives
-
-[x] Creating a React Project with Next.js
-
-[ ] Common LLMs - Choosing a LLM
-
-[ ] Customizing Streaming Interfaces
-
-[ ] Building Routes
-
-[ ] Creating and Generating Components
-
-[ ] Using Hooks (useChat, useCompletion, useActions, etc)
-
-[ ] Practice crafting effective prompts for prompt engineering and tuning your prompts
-
-[ ] Implement real-world web application integrations with Spotify API, OpenAI model, and additional models.
-
-### Exercise #0 Objectives
-
-[ ] Review the Vercel Suite of AI Tools and SDK
-
-[ ] Create a React Project with JavaScript and Next.js
-
-[ ] Build Prompts for your AI
-
-[ ] Build Routes
-
-[ ] Use Hooks
-
-[ ] Work with Vercel's SDK Core, React Server Components (RSC), and User Interface (UI).
-
 ### Exercise #1: Building Better Prompts Objectives
 
 In this section, students will build their own ChatGPT system by creating and setting up a React project with JavaScript, Next.js, and the Vercel SDK.
@@ -51,3 +19,12 @@ In this section, students will build their own ChatGPT system by creating and se
 - Tune prompts
 - Try different streaming interface
 - Make your AI make a decision based on prompts and data it knows / receives
+
+### Exercise #2: Pretrained Models Objectives
+
+We will walkthrough setting up a music-based project to identify musical notes with a selected pre-trained LLM and it's associated data that takes audio for prompts.
+
+- Review types of prompts.
+- Demonstrate process of choosing pre-trained model and datasets to use for app.
+- Walkthrough setup of class project (it will be used for labs later!)
+- Basic chord detection logic from AI
