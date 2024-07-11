@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 
-const SpotifyViewer = (note) => {
+const SpotifyViewer = () => {
   const [music, setMusic] = useState([]);
-  const [newNote, setNewNote] = useState(note);
   const genres = [];
   const getData = () => {
     var request = {
@@ -31,25 +30,15 @@ const SpotifyViewer = (note) => {
     if (genres.length > 0) {
       Canvas({ genres });
     }
-    if (note !== undefined) {
-      console.log(note);
-    } else {
-      setNewNote(note);
-      console.log(newNote);
-    }
-  }, [note]);
+  });
 
   return (
     <div>
-      {note ? (
-        <p>Note</p>
-      ) : (
-        music.map((i) => (
-          <div key={i.id}>
-            <p>Genre: {i.genre}</p>
-          </div>
-        ))
-      )}
+      {music.map((i) => (
+        <div key={i.id}>
+          <p>Genre: {i.genre}</p>
+        </div>
+      ))}
     </div>
   );
 };

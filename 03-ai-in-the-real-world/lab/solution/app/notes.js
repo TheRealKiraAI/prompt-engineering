@@ -17,6 +17,7 @@ const scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
 const Notes = () => {
   const [detectedNote, setDetectedNote] = useState("");
+  const [score, setPerformanceScore] = useState("");
   const notesPlayed = [];
 
   useEffect(() => {
@@ -65,11 +66,34 @@ const Notes = () => {
     });
   };
 
+  const PerformanceScore = ({ performanceScore }) => {
+    if (performanceScore > 80) {
+      return <p>Close! You played almost all the notes correctly!</p>;
+    } else {
+      return <p>Performance score: {performanceScore}%. Keep practicing.</p>;
+    }
+  };
+
+  function analyzePerformance(notes) {
+    const targetNotes = ["C", "D", "E", "F", "G"];
+
+    let correctNotes = 0;
+    for (let i = 0; i < 5; i++) {
+      if (notes.includes(targetNotes[i])) {
+        correctNotes++;
+      }
+    }
+
+    const performanceScore = (correctNotes / 5) * 100;
+    setPerformanceScore(performanceScore);
+  }
+
   return (
     <div className={styles.main}>
       <p>Detected Note: {detectedNote}</p>
       <Canvas note={detectedNote} />
-      <SpotifyViewer note={detectedNote} />
+      <SpotifyViewer />
+      <PerformanceScore performanceScore={score} />
     </div>
   );
 };
@@ -103,25 +127,6 @@ function freqToMidi(f) {
   const mathlog2 = Math.log(f / 440) / Math.log(2);
   const m = Math.round(12 * mathlog2) + 69;
   return m;
-}
-
-function analyzePerformance(notes) {
-  const targetNotes = ["C", "D", "E", "F", "G"];
-
-  let correctNotes = 0;
-  for (let i = 0; i < 5; i++) {
-    if (notes.includes(targetNotes[i])) {
-      correctNotes++;
-    }
-  }
-
-  const performanceScore = (correctNotes / 5) * 100;
-
-  if (performanceScore > 80) {
-    return "Close! You played almost all the notes correctly!";
-  } else {
-    return `Performance score: ${performanceScore}%. Keep practicing.`;
-  }
 }
 
 export default Notes;
