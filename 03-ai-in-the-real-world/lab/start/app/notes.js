@@ -17,6 +17,7 @@ const scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const Notes = () => {
   const [detectedNote, setDetectedNote] = useState("");
 
+  // update the audio input
   useEffect(() => {
     const setup = async () => {
       audioContext = new AudioContext();
@@ -30,6 +31,7 @@ const Notes = () => {
     setup();
   }, []);
 
+  // loads ml5 AI pitch detection model
   const startPitch = (stream, audioContext) => {
     startAudioContext();
     if (audioContext) {
@@ -43,8 +45,8 @@ const Notes = () => {
     getPitch();
   };
 
+  // get pitch from ml5 library
   const getPitch = () => {
-    // get pitch from ml5 library
     pitch.getPitch(function (err, frequency) {
       if (frequency) {
         console.log(`frequency ${frequency}`);
@@ -68,7 +70,7 @@ const Notes = () => {
 // ---------------------------- HELPER FUNCTIONS ----------------------------
 /*  
  name: startAudioContext
-input: none
+ input: none
  desc: provides user to allow for audio input on the web
 */
 function startAudioContext() {
@@ -87,7 +89,7 @@ function startAudioContext() {
 
 /*  
  name: freqToMidi
-input: f (frequency)
+ input: f (frequency)
  desc: converts frequency input from audio to a MIDI number
 */
 function freqToMidi(f) {
