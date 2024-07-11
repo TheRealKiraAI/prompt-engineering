@@ -47,10 +47,8 @@ const Notes = () => {
     // get pitch from ml5 library
     pitch.getPitch(function (err, frequency) {
       if (frequency) {
-        console.log(`frequency ${frequency}`);
         let midiNum = freqToMidi(frequency);
         const note = scale[midiNum % 12];
-        console.log(`note ${note}`);
         setDetectedNote(note);
       }
       getPitch(); // continue detecting pitches

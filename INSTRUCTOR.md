@@ -28,3 +28,10 @@ We will walkthrough setting up a music-based project to identify musical notes w
 - Demonstrate process of choosing pre-trained model and datasets to use for app.
 - Walkthrough setup of class project (it will be used for labs later!)
 - Basic chord detection logic from AI
+
+### Exercise #3: AI in the Real World Objectives
+
+Why do we build applications? A lot of times we will be making decisions or completing a task. Students will continue expanding exercise 2 to advance the AI music app by incorporating a fake Spotify API data to utilize AI to make decisions.
+
+- Advance class project together (this also provides a refresher on how to send requests to ADD fake API to get data from fake Spotify API)
+- Use data, logic, prompting, and of course your AI to make an informed decision
