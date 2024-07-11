@@ -2,53 +2,22 @@
 
 import React, { useEffect, useState } from "react";
 import ml5 from "ml5";
+import dynamic from "next/dynamic";
 
 const Canvas = dynamic(() => import("./canvas"), {
   ssr: false,
 });
 import styles from "./page.module.css";
 
-import dynamic from "next/dynamic";
-
 // pitch variables
 let pitch;
 let audioContext;
 let stream;
 
-const scale = ["C", "C#", "D", "D#", "E", "E#", "F", "F#", "G", "G#", "A", "A#", "B"];
-const chordPatterns = {
-  "C major": ["C", "E", "G"],
-  "F major": ["F", "A", "D"],
-  "D major": ["D", "F#", "A"],
-  "G major": ["G", "B", "D"],
-  "A major": ["A", "C#", "E"],
-};
-
-const scales = {
-  "C Major": ["C", "D", "E", "F", "G", "A", "B"],
-  "G Major": ["G", "A", "B", "C", "D", "E", "F#"],
-  "A Major": ["A", "B", "C#", "D", "E", "F#", "G#"],
-  "D Major": ["D", "E", "F#", "G", "A", "B", "C#"],
-  "E Major": ["E", "F#", "G#", "A", "B", "C#", "D#"],
-  "F Major": ["F", "G", "A", "Bb", "C", "D", "E"],
-};
-
-const identifyScales = (note) => {
-  const matchingScales = [];
-  for (const [scale, notes] of Object.entries(scales)) {
-    if (notes.includes(note)) {
-      matchingScales.push(scale);
-    }
-  }
-  return matchingScales;
-};
+const scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
 const Notes = () => {
-  const [currentChord, setCurrentChord] = useState("");
-  const [currentNotes, setCurrentNotes] = useState([]);
-  const [notesArray, setNotesArray] = useState([]);
   const [detectedNote, setDetectedNote] = useState("");
-  const [matchedScales, setMatchedScales] = useState([]);
 
   useEffect(() => {
     const setup = async () => {
@@ -79,22 +48,12 @@ const Notes = () => {
   const getPitch = () => {
     // get pitch from ml5 library
     pitch.getPitch(function (err, frequency) {
-      if (frequency < 120) {
+      if (frequency) {
         console.log(`frequency ${frequency}`);
         let midiNum = freqToMidi(frequency);
         const note = scale[midiNum % 12];
         console.log(`note ${note}`);
-        const newNotesArray = [...notesArray, note];
-        setNotesArray(newNotesArray);
-        setCurrentNotes(newNotesArray);
-        if (newNotesArray.length >= 3) {
-          // Assuming a chord is at least 3 notes
-          const chord = notesToChord(newNotesArray);
-          setCurrentChord(chord);
-          setNotesArray([]); // Reset notes array after identifying a chord
-        }
         setDetectedNote(note);
-        setMatchedScales(identifyScales(note)); // Update matched scales
       }
       getPitch(); // continue detecting pitches
     });
@@ -102,9 +61,7 @@ const Notes = () => {
 
   return (
     <div className={styles.main}>
-      <p>Detected Note: {currentNotes}</p>
-      {/* <p>Matched Scales: {matchedScales.join(", ")}</p> */}
-      {/* <Canvas note={currentNotes} /> */}
+      <p>Detected Note: {detectedNote}</p>
       <Canvas note={detectedNote} />
     </div>
   );
@@ -139,18 +96,6 @@ function freqToMidi(f) {
   const mathlog2 = Math.log(f / 440) / Math.log(2);
   const m = Math.round(12 * mathlog2) + 69;
   return m;
-}
-
-function notesToChord(notes) {
-  let foundChord = "Unknown Chord";
-  Object.entries(chordPatterns).forEach(([chord, chordNotes]) => {
-    const sortedChordNotes = chordNotes.sort();
-    const sortedNotes = notes.sort();
-    if (sortedChordNotes.every((note) => sortedNotes.includes(note))) {
-      foundChord = chord;
-    }
-  });
-  return foundChord;
 }
 
 export default Notes;
