@@ -1,23 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import ml5 from "ml5";
-import dynamic from "next/dynamic";
-
-const Canvas = dynamic(() => import("./canvas"), {
-  ssr: false,
-});
 import styles from "./page.module.css";
 
-// pitch variables
-let pitch;
 let audioContext;
-let stream;
-
-const scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
 const Notes = () => {
-  return <div className={styles.main}></div>;
+  return (
+    <div className={styles.main}>
+      <p>My notes</p>
+    </div>
+  );
 };
 
 // ---------------------------- HELPER FUNCTIONS ----------------------------
