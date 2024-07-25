@@ -11,10 +11,10 @@ In this section, students will build their own ChatGPT system by creating and se
 - Use Hooks
 - Work with Vercel's SDK Core, React Server Components (RSC), and User Interface (UI).
 
-## Running the Exercise
+## Running the Projects
 
 To run the solution:
 
 1. Navigate to the solution directory `cd solution`
-2. Run `pnpm install` to install dependencies
-3. Run `pnpm run dev` to start the development server.
+2. Run `npm install` to install dependencies
+3. Run `npm run dev` to start the development server.
