@@ -1,12 +1,12 @@
 # Lab #1: Prompt Tuning
 
-In this section, students will build their own ChatGPT system by creating and setting up a React project with JavaScript, Next.js, and the Vercel SDK.
+In this section, students will expand on the fundamentals of exercises utilizing Vercel's SDK Core and building their own ChatGPT. Students will learn how to use Stream components to stream React components from the server to the client with the streamUI function. This is useful for React projects when needing to go beyond raw text and stream components to the client in real-time.
 
 ## Topics Covered
 
 - Review Vercel AI SDK Core, UI, RSC / Introduction to lab
 - Tune prompts
-- Try different streaming interface
+- Try building dynamic interfaces and stream components
 - Make your AI make a decision based on prompts and data it knows / receives
 
 ## Running the Exercise
@@ -14,22 +14,23 @@ In this section, students will build their own ChatGPT system by creating and se
 To run the solution:
 
 1. Navigate to the solution directory `cd solution`
-2. Run `pnpm install` to install dependencies
-3. Run `pnpm run dev` to start the development server.
+2. Run `nnpm install` to install dependencies
+3. Run `npm run dev` to start the development server.
 
 ## Instructions
 
-You are a starting your own business of choice and need to create an AI UI to render content for your business. E.g. it could be names for your business, slogans, instagram posts, etc.
+Prompt: You are a starting your own business of choice and need to create an AI UI to render content for your business. E.g. it could be names for your business, slogans, instagram posts, etc.
 
 My example: Mountain bike shop; create names for my business as a mountain bike shop.
 
-### Step 0: Install dependencies
+### Step 0: Install dependencies & Project Specific Setup
 
-Run `pnpm install` to install dependencies in the `start` directory.
+1. Run `npm install` to install dependencies in the `start` directory.
+2. Copy your `.env.local` from the exercise and paste it into the `start` directory. You will need your `OPENAI_API_KEY`.
 
 ### Step 1: Create a Server Action
 
-The streamUI requires a Server Action, (where you can call the steamUI) as well as a page to call the Server Action. Create a file in app/actions.js following the setup code for streamUI.
+The streamUI requires a Server Action, (where you can call the steamUI) as well as a page to call the Server Action. Review the file in `app/actions.js` (or the code below) to see how a streamUI component is created.
 
 ```"use server";
 
@@ -76,7 +77,9 @@ export async function streamComponent() {
 
 ### Step 2: Create a Client Component to Render the Form
 
-Example
+In the `app/page.js` file, create a client component to render the form. The form should have a submit button that calls the streamComponent function when clicked.
+
+Becuase this is new code, here is an example utilizing some preconfigured components.
 
 ```
 "use client";
@@ -104,15 +107,15 @@ export default function Page() {
 }
 ```
 
-### Step 3: Create a Page to Render the Form
+### Step 3: Modify the Given Prompt
 
 Modify the prompt to generate different types of business names (recall: You are a starting your own business of choice and need to create an AI UI to render content for your business. E.g. it could be names for your business, slogans, instagram posts, etc. My example: Mountain bike shop; create names for my business as a mountain bike shop.)
 
-Run pnpm run dev to test the setup.
+Run `npm run dev` to test the setup.
 
 ### Step 4: Update the Logic to Make a Decision Based on the Information Produced
 
-Update the logic to make a decision based on the information produced. Ex. if the generated name has the word "bike" in it, do something or show a component or log text based on the name. Make these changes in generate within the `streamComponent`.
+Update the logic to make a decision based on the information produced. Ex. if the generated name has the word "bike" in it, do something, show a component, log text based on the name. Make these changes in generate within the `streamComponent`.
 
 ### ⭐ Bonus - Step 5: Create an API Call ⭐
 
