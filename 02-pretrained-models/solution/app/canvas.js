@@ -3,39 +3,46 @@ import p5 from "p5";
 
 const Canvas = (note, genre) => {
   let canvasRef = useRef(null);
+
   const [color, setColor] = useState([0, 255, 0]);
+  const canvasWidth = 800;
+  const canvasHeight = 400;
 
   useEffect(() => {
     const sketch = (p) => {
       p.setup = () => {
-        p.createCanvas(window.innerWidth, window.innerHeight - 550);
+        p.createCanvas(canvasWidth, canvasHeight);
         p.clear();
-        p.background(54, 69, 79);
         p.stroke(0);
         p.strokeWeight(2);
       };
 
       p.draw = () => {
+        p.clear(); // clear canvas each frame
         if (note) {
           let xPos = mapNote(note.note);
           p.fill(color);
-          p.ellipse(xPos + 75, 200, 100, 100);
+          p.ellipse(xPos + 75, canvasHeight / 2, 100, 100); // vertically centered
         }
       };
     };
 
     const mapNote = (note) => {
-      const canvasWidth = window.innerWidth;
-      const spacing = canvasWidth / 8;
+      const spacing = canvasWidth / 13;
 
       const notePositions = {
-        C: 2 * spacing,
+        C: 0 * spacing,
+        "C#": 1 * spacing,
         D: 2 * spacing,
-        E: 3 * spacing,
-        F: 4 * spacing,
-        G: 5 * spacing,
-        A: 6 * spacing,
-        B: 7 * spacing,
+        "D#": 3 * spacing,
+        E: 4 * spacing,
+        F: 5 * spacing,
+        "F#": 6 * spacing,
+        G: 7 * spacing,
+        "G#": 8 * spacing,
+        A: 9 * spacing,
+        "A#": 10 * spacing,
+        B: 11 * spacing,
       };
       return notePositions[note] || 0;
     };
