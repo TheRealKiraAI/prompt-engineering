@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import pitchDetection from "./pitchDetection";
+import pitchDetection from "./utils/pitchDetection";
 import styles from "./page.module.css";
 import dynamic from "next/dynamic";
 
