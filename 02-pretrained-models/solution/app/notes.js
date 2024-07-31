@@ -1,25 +1,22 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import ml5 from "ml5";
+import pitchDetection from "./utils/pitchDetection";
+import styles from "./page.module.css";
 import dynamic from "next/dynamic";
 
 const Canvas = dynamic(() => import("./canvas"), {
   ssr: false,
 });
-import styles from "./page.module.css";
 
-// pitch variables
-let pitch;
 let audioContext;
+let pitch;
 let stream;
-
 const scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
 const Notes = () => {
-  const [detectedNote, setDetectedNote] = useState("");
+  const [detectedNote, setDetectedNote] = useState(""); // add use state to update current note values
 
-  // updates audio input stream from user's microphone
   useEffect(() => {
     const setup = async () => {
       audioContext = new AudioContext();
@@ -33,11 +30,10 @@ const Notes = () => {
     setup();
   }, []);
 
-  // loads pitch detection model and starts pitch detection
   const startPitch = (stream, audioContext) => {
-    startAudioContext();
+    startAudioContext(); // uses our helper function for audio input
     if (audioContext) {
-      pitch = ml5.pitchDetection("./model/", audioContext, stream, modelLoaded);
+      pitch = pitchDetection("./model/", audioContext, stream, modelLoaded);
     } else {
       console.log("AudioContext or mic not initialized.");
     }
@@ -47,8 +43,8 @@ const Notes = () => {
     getPitch();
   };
 
-  // get pitch from ml5 library
   const getPitch = () => {
+    // get pitch from ml5 library
     pitch.getPitch(function (err, frequency) {
       if (frequency) {
         console.log(`frequency ${frequency}`);
@@ -80,7 +76,7 @@ function startAudioContext() {
     // if the AudioContext is already created, resume it
     audioContext.resume();
   } else {
-    // create and start the AudioContext
+    // create and start the AudioContext from browser
     audioContext = new (window.AudioContext ||
       window.webkitAudioContext ||
       window.mozAudioContext ||

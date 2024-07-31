@@ -19,7 +19,6 @@
 # misc
 .DS_Store
 *.pem
-ml5/
 
 # debug
 npm-debug.log*
