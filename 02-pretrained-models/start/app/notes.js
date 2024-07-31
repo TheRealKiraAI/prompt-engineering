@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import ml5 from "ml5";
+import pitchDetection from "./utils/pitchDetection";
 import styles from "./page.module.css";
 import dynamic from "next/dynamic";
 
@@ -33,7 +33,7 @@ const Notes = () => {
   const startPitch = (stream, audioContext) => {
     startAudioContext(); // uses our helper function for audio input
     if (audioContext) {
-      pitch = ml5.pitchDetection("./model/", audioContext, stream, modelLoaded);
+      pitch = pitchDetection("./model/", audioContext, stream, modelLoaded);
     } else {
       console.log("AudioContext or mic not initialized.");
     }
