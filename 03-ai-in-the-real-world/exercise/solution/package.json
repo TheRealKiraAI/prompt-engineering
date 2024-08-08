@@ -4,14 +4,19 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "serve": "next serve",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@tensorflow/tfjs": "^4.20.0",
+    "json-server": "^1.0.0-beta.1",
+    "next": "14.2.5",
+    "p5": "^1.10.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.5"
+    "serve": "^14.2.3"
   },
   "devDependencies": {
     "eslint": "^8",

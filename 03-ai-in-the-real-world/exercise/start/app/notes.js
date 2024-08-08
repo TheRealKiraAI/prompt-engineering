@@ -1,21 +1,22 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import ml5 from "ml5";
+import pitchDetection from "./utils/pitchDetection";
+import styles from "./page.module.css";
 import dynamic from "next/dynamic";
 
+// import canvas with SSR false to disable server-side rendering
 const Canvas = dynamic(() => import("./canvas"), {
   ssr: false,
 });
-import styles from "./page.module.css";
 
-// pitch variables
-let pitch;
 let audioContext;
+let pitch;
 let stream;
-
 const scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
 const Notes = () => {
-  const [detectedNote, setDetectedNote] = useState("");
+  const [detectedNote, setDetectedNote] = useState(""); // add use state to update current note values
 
   useEffect(() => {
     const setup = async () => {
@@ -31,9 +32,9 @@ const Notes = () => {
   }, []);
 
   const startPitch = (stream, audioContext) => {
-    startAudioContext();
+    startAudioContext(); // uses our helper function for audio input
     if (audioContext) {
-      pitch = ml5.pitchDetection("./model/", audioContext, stream, modelLoaded);
+      pitch = pitchDetection("./model/", audioContext, stream, modelLoaded);
     } else {
       console.log("AudioContext or mic not initialized.");
     }
@@ -47,8 +48,10 @@ const Notes = () => {
     // get pitch from ml5 library
     pitch.getPitch(function (err, frequency) {
       if (frequency) {
+        console.log(`frequency ${frequency}`);
         let midiNum = freqToMidi(frequency);
         const note = scale[midiNum % 12];
+        console.log(`note ${note}`);
         setDetectedNote(note);
       }
       getPitch(); // continue detecting pitches
@@ -74,7 +77,7 @@ function startAudioContext() {
     // if the AudioContext is already created, resume it
     audioContext.resume();
   } else {
-    // create and start the AudioContext
+    // create and start the AudioContext from browser
     audioContext = new (window.AudioContext ||
       window.webkitAudioContext ||
       window.mozAudioContext ||
