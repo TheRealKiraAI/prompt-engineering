@@ -5,6 +5,7 @@ import pitchDetection from "./utils/pitchDetection";
 import styles from "./page.module.css";
 import dynamic from "next/dynamic";
 
+// import canvas with SSR false to disable server-side rendering
 const Canvas = dynamic(() => import("./canvas"), {
   ssr: false,
 });
