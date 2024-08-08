@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import ml5 from "ml5";
+import pitchDetection from "./utils/pitchDetection";
 import dynamic from "next/dynamic";
 import SpotifyViewer from "./spotify-viewer";
 
@@ -36,7 +38,7 @@ const Notes = () => {
   const startPitch = (stream, audioContext) => {
     startAudioContext();
     if (audioContext) {
-      pitch = ml5.pitchDetection("./model/", audioContext, stream, modelLoaded);
+      pitch = pitchDetection("./model/", audioContext, stream, modelLoaded);
     } else {
       console.log("AudioContext or mic not initialized.");
     }

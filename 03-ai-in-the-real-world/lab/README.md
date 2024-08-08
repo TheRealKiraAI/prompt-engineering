@@ -4,7 +4,7 @@ Create a way using our AI to analyze the correct amount of notes played based on
 
 ## Topics Covered
 
-- - Put JavaScript and React into practice
+- Put JavaScript and React into practice
 - Advance logic utilizing data, your pre-trained AI model, and logic to make an informed decision
 - Put it all together!
 
@@ -13,8 +13,8 @@ Create a way using our AI to analyze the correct amount of notes played based on
 To run the solution:
 
 1. Navigate to the solution directory `cd solution`
-2. Run `pnpm install` to install dependencies
-3. Run `pnpm run dev` to start the development server.
+2. Run `npm install` to install dependencies
+3. Run `npm run dev` to start the development server.
 
 ## Instructions
 
@@ -22,11 +22,11 @@ Create a way using our AI to analyze the correct amount of notes played based on
 
 ### Step 0: Install dependencies
 
-Run `pnpm install` to install dependencies in the `start` directory.
+Run `npm install` to install dependencies in the `start` directory.
 
 ### Step 1: Create Target Notes
 
-Create or decide a few notes for a sequence of notes. If you want to get fancy, feel free to use this virtual keyboard to come up with a good jingle. https://www.musicca.com/piano. Store your `targetNotes` in an array.
+Create or decide a few notes for a sequence of notes. If you want to get fancy, feel free to use this virtual keyboard to come up with a good jingle. https://www.musicca.com/piano. Store your `targetNotes` in an array in `notes.js`.
 
 ### Step 2: Create a function to Analyze Performance
 

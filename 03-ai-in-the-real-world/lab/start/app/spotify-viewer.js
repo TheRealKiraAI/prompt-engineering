@@ -1,10 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const SpotifyViewer = () => {
+  // add from here
   const [music, setMusic] = useState([]);
   const genres = [];
+
+  useEffect(() => {
+    getData();
+  });
+
   const getData = () => {
     var request = {
       method: "GET",
@@ -21,16 +27,6 @@ const SpotifyViewer = () => {
       })
       .catch((err) => console.log("error", err));
   };
-
-  useEffect(() => {
-    getData();
-  });
-
-  //   useEffect(() => {
-  //     if (genres.length > 0) {
-  //       Canvas({ genres });
-  //     }
-  //   }, []);
 
   return (
     <div>
