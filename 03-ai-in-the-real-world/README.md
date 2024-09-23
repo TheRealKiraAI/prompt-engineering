@@ -12,5 +12,5 @@ Why do we build applications? A lot of times we will be making decisions or comp
 To run the solution:
 
 1. Navigate to the solution directory `cd solution`
-2. Run `pnpm install` to install dependencies
-3. Run `pnpm run dev` to start the development server.
+2. Run `npm install` to install dependencies
+3. Run `npm run dev` to start the development server.

@@ -12,11 +12,10 @@
   "dependencies": {
     "@tensorflow/tfjs": "^4.20.0",
     "json-server": "^1.0.0-beta.1",
-    "next": "14.2.5",
+    "next": "^14.2.13",
     "p5": "^1.10.0",
     "react": "^18",
-    "react-dom": "^18",
-    "serve": "^14.2.3"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "eslint": "^8",
