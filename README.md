@@ -19,7 +19,7 @@ Knowledge of AI tooling is critical for future proofing the careers of React dev
 
 ## Prerequisites for Setup
 - Clone GitHub repo
-- Install pnpm if not already
+- Install Node.js if not already
 - Obtain OpenAI key and have accessible or saved in a .env file on your computer
 
 ## Course Times ⏱
